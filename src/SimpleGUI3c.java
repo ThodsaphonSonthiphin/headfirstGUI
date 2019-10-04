@@ -1,8 +1,15 @@
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
-public class SimpleGUI3c implements ActionListener {
+
+
+public class SimpleGUI3c {
     JFrame jFrame;
+    JLabel label;
+    LabelListener myLabelListener;
+    ColorListener myColorListener;
+
     public static void main(String[] args){
 
         SimpleGUI3c simpleGUI3c = new SimpleGUI3c();
@@ -15,14 +22,28 @@ public class SimpleGUI3c implements ActionListener {
         jFrame = new JFrame();
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JButton button = new JButton("click me");
+        JButton labelButton = new JButton("Change label");
 
-        button.addActionListener(this);
+        myLabelListener = new LabelListener();
+
+        labelButton.addActionListener(myLabelListener);
+
+        JButton colorButton = new JButton("Change drawing color");
+
+        myColorListener = new ColorListener();
+        colorButton.addActionListener(myColorListener);
+
+        label = new JLabel("I am a label");
+
+
+
 
         MyDrawPanel myDrawPanel = new MyDrawPanel();
 
-        jFrame.getContentPane().add(BorderLayout.SOUTH,button);
+        jFrame.getContentPane().add(BorderLayout.SOUTH,colorButton);
         jFrame.getContentPane().add(BorderLayout.CENTER,myDrawPanel);
+        jFrame.getContentPane().add(BorderLayout.EAST,labelButton);
+        jFrame.getContentPane().add(BorderLayout.WEST,label);
 
         jFrame.setSize(300,300);
         jFrame.setVisible(true);
@@ -30,14 +51,24 @@ public class SimpleGUI3c implements ActionListener {
 
     }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
 
 
+    class LabelListener implements ActionListener{
 
-        jFrame.repaint();
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            label.setText("Ouch!");
 
+        }
+    }
 
+    class ColorListener implements ActionListener{
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            jFrame.repaint();
+
+        }
     }
 }
 
